@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Bitfield manipulation",
     "homepage": "https://github.com/ficlabapp/bitfield",
+    "repository": "github:ficlabapp/bitfield",
     "license": "ISC",
     "author": [
         {
