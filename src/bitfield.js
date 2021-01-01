@@ -25,9 +25,9 @@ const ajv = new Ajv.default({ useDefaults: true, removeAdditional: true, coerceT
 const validateInit = ajv.compile(initSchema);
 
 export class Bitfield {
-    constructor(init = {}) {
+    constructor(init = {}, value = 0n) {
         if (!validateInit(init)) throw new Error("Invalid init data");
-        Object.defineProperty(this, "_value", { value: 0n, writable: true });
+        Object.defineProperty(this, "_value", { value: BigInt(value), writable: true });
         for (let name in init) {
             Object.defineProperty(this, name, {
                 enumerable: true,
