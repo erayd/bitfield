@@ -51,7 +51,7 @@ export class Bitfield {
         }
     }
 
-    toString() {
-        return this._value.toString();
+    toString(radix = 16) {
+        return this._value.toString(radix);
     }
 }
