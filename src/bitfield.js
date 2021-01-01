@@ -50,4 +50,8 @@ export class Bitfield {
             });
         }
     }
+
+    toString() {
+        return this._value.toString();
+    }
 }
