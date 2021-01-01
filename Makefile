@@ -1,3 +1,5 @@
-.PHONY: all
-all:
-	$(MAKE) -C src
+PRETTIER := node_modules/.bin/prettier
+
+.PHONY: prettier
+prettier:
+	$(PRETTIER) --write **/*.js **/*.json

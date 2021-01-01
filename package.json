@@ -1,6 +1,6 @@
 {
     "name": "@ficlabapp/bitfield",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Bitfield manipulation",
     "homepage": "https://github.com/ficlabapp/bitfield",
     "repository": "github:ficlabapp/bitfield",
@@ -12,7 +12,7 @@
         }
     ],
     "type": "module",
-    "main": "./bitfield.js",
+    "main": "./src/bitfield.js",
     "devDependencies": {
         "prettier": "^2.2.1"
     },
