@@ -40,13 +40,16 @@ export class Bitfield {
      * @param object init  List of properties to initialise with
      * @param BigInt value Initial bitfield value
      */
-    constructor(init = {}, value = 0n) {
-        if (typeof init === "object" && init instanceof Bitfield) init = init._init;
+    constructor(init = {}, value = undefined) {
+        if (typeof init === "object" && init instanceof Bitfield) {
+            init = init._init;
+            value = init._value;
+        }
 
         if (!ajv.validate("init", init)) throw new Error("Invalid init data");
 
         Object.defineProperties(this, {
-            _value: { value: BigInt(value), writable: true },
+            _value: { value: BigInt(value || 0n), writable: true },
             _init: { value: init, writable: false },
         });
 
