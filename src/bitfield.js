@@ -4,28 +4,31 @@ import Ajv from "ajv";
 
 // json-schema validation of setup args
 const ajv = new Ajv.default({ useDefaults: true, removeAdditional: true, coerceTypes: true });
-ajv.addSchema({
-    $schema: "http://json-schema.org/draft-07/schema#",
-    definitions: {
-        property: {
-            type: "object",
-            required: ["offset", "size"],
-            properties: {
-                offset: {
-                    type: "integer",
-                    minimum: 0,
+ajv.addSchema(
+    {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        definitions: {
+            property: {
+                type: "object",
+                required: ["offset", "size"],
+                properties: {
+                    offset: {
+                        type: "integer",
+                        minimum: 0,
+                    },
+                    size: {
+                        type: "integer",
+                        minimum: 0,
+                        default: 1,
+                    },
                 },
-                size: {
-                    type: "integer",
-                    minimum: 0,
-                    default: 1,
-                }
-            }
-        }
+            },
+        },
+        type: "object",
+        additionalProperties: { $ref: "#/definitions/property" },
     },
-    type: "object",
-    additionalProperties: {$ref: "#/definitions/property"},
-}, "init");
+    "init"
+);
 
 /** Generic bitfield manipulation class */
 export class Bitfield {
@@ -44,7 +47,7 @@ export class Bitfield {
 
         Object.defineProperties(this, {
             _value: { value: BigInt(value), writable: true },
-            _init: {value: init, writable: false },
+            _init: { value: init, writable: false },
         });
 
         for (let name in init) this.defineProperty(name, init[name].offset, init[name].size);
@@ -61,7 +64,7 @@ export class Bitfield {
      * @return void
      */
     defineProperty(name, offset, size = 1) {
-        if (!ajv.validate("init#/definitions/property", {offset, size}))
+        if (!ajv.validate("init#/definitions/property", { offset, size }))
             throw new Error("Invalid property definition");
 
         Object.defineProperty(this, name, {
@@ -80,9 +83,9 @@ export class Bitfield {
                     this._value &= ~mask;
                     this._value |= mask & (BigInt(val) << BigInt(offset));
                 }
-            }
+            },
         });
-        this._init[name] = {offset, size};
+        this._init[name] = { offset, size };
     }
 
     /**
