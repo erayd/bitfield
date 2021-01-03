@@ -2,6 +2,7 @@
 
 import Ajv from "ajv";
 
+// json-schema validation of setup args
 const ajv = new Ajv.default({ useDefaults: true, removeAdditional: true, coerceTypes: true });
 ajv.addSchema({
     $schema: "http://json-schema.org/draft-07/schema#",
@@ -26,7 +27,16 @@ ajv.addSchema({
     additionalProperties: {$ref: "#/definitions/property"},
 }, "init");
 
+/** Generic bitfield manipulation class */
 export class Bitfield {
+    /**
+     * Create a new instance
+     *
+     * @since 1.0.0
+     *
+     * @param object init  List of properties to initialise with
+     * @param BigInt value Initial bitfield value
+     */
     constructor(init = {}, value = 0n) {
         if (typeof init === "object" && init instanceof Bitfield) init = init._init;
 
@@ -40,6 +50,16 @@ export class Bitfield {
         for (let name in init) this.defineProperty(name, init[name].offset, init[name].size);
     }
 
+    /**
+     * Create a new property
+     *
+     * @since 1.0.0
+     *
+     * @param string name
+     * @param int    offset Offset from the start of the bitfield
+     * @param int    size   Size in bits of this property
+     * @return void
+     */
     defineProperty(name, offset, size = 1) {
         if (!ajv.validate("init#/definitions/property", {offset, size}))
             throw new Error("Invalid property definition");
@@ -65,6 +85,14 @@ export class Bitfield {
         this._init[name] = {offset, size};
     }
 
+    /**
+     * Convert to string (proxy for BigInt.toString)
+     *
+     * @since 1.0.0
+     *
+     * @param int radix Base to convert with
+     * @return string
+     */
     toString(radix = 16) {
         return this._value.toString(radix);
     }
