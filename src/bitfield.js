@@ -42,8 +42,8 @@ export class Bitfield {
      */
     constructor(init = {}, value = undefined) {
         if (typeof init === "object" && init instanceof Bitfield) {
-            init = init._init;
             value = init._value;
+            init = init._init;
         }
 
         if (!ajv.validate("init", init)) throw new Error("Invalid init data");
