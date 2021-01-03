@@ -59,7 +59,7 @@ export class Bitfield {
     /**
      * Create a new property
      *
-     * @since 1.0.0
+     * @since 1.0.6
      *
      * @param string name
      * @param int    offset Offset from the start of the bitfield
@@ -101,5 +101,21 @@ export class Bitfield {
      */
     toString(radix = 16) {
         return this._value.toString(radix);
+    }
+
+    /**
+     * Set or get the bitmask value directly
+     *
+     * @since 1.0.7
+     *
+     * @param int value New bitmask value
+     * @return BigInt Old bitmask value
+     */
+    value(value = undefined) {
+        if (value === undefined) return this._value;
+
+        let old = this._value;
+        this._value = BigInt(value);
+        return old;
     }
 }
