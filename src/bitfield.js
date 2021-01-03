@@ -26,8 +26,15 @@ const validateInit = ajv.compile(initSchema);
 
 export class Bitfield {
     constructor(init = {}, value = 0n) {
+        if (typeof init === "object" && init instanceof Bitfield) init = init._init;
+
         if (!validateInit(init)) throw new Error("Invalid init data");
-        Object.defineProperty(this, "_value", { value: BigInt(value), writable: true });
+
+        Object.defineProperties(this, {
+            _value: { value: BigInt(value), writable: true },
+            _init: init,
+        });
+
         for (let name in init) {
             Object.defineProperty(this, name, {
                 enumerable: true,
