@@ -3,7 +3,7 @@
 import Ajv from "ajv";
 
 // json-schema validation of setup args
-const ajv = new Ajv.default({ useDefaults: true, removeAdditional: true, coerceTypes: true });
+const ajv = new Ajv({ useDefaults: true, removeAdditional: true, coerceTypes: true });
 ajv.addSchema(
     {
         $schema: "http://json-schema.org/draft-07/schema#",
