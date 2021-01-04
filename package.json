@@ -1,6 +1,6 @@
 {
     "name": "@ficlabapp/bitfield",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "Bitfield manipulation",
     "homepage": "https://github.com/ficlabapp/bitfield",
     "repository": "github:ficlabapp/bitfield",
@@ -14,6 +14,7 @@
     "type": "module",
     "main": "./src/bitfield.js",
     "devDependencies": {
+        "ajv-cli": "^4.0.1",
         "prettier": "^2.2.1"
     },
     "dependencies": {

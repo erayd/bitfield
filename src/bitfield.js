@@ -1,34 +1,6 @@
 "use strict";
 
-import Ajv from "ajv";
-
-// json-schema validation of setup args
-const ajv = new Ajv({ useDefaults: true, removeAdditional: true, coerceTypes: true });
-ajv.addSchema(
-    {
-        $schema: "http://json-schema.org/draft-07/schema#",
-        definitions: {
-            property: {
-                type: "object",
-                required: ["offset", "size"],
-                properties: {
-                    offset: {
-                        type: "integer",
-                        minimum: 0,
-                    },
-                    size: {
-                        type: "integer",
-                        minimum: 0,
-                        default: 1,
-                    },
-                },
-            },
-        },
-        type: "object",
-        additionalProperties: { $ref: "#/definitions/property" },
-    },
-    "init"
-);
+import * as validate from "./schema.js";
 
 /** Generic bitfield manipulation class */
 export class Bitfield {
@@ -46,7 +18,7 @@ export class Bitfield {
             init = init._init;
         }
 
-        if (!ajv.validate("init", init)) throw new Error("Invalid init data");
+        if (!validate.init(init)) throw new Error("Invalid init data");
 
         Object.defineProperties(this, {
             _value: { value: BigInt(value || 0n), writable: true },
@@ -67,8 +39,7 @@ export class Bitfield {
      * @return void
      */
     defineProperty(name, offset, size = 1) {
-        if (!ajv.validate("init#/definitions/property", { offset, size }))
-            throw new Error("Invalid property definition");
+        if (!validate.property({ offset, size })) throw new Error("Invalid property definition");
 
         Object.defineProperty(this, name, {
             enumerable: true,
