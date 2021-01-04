@@ -17,7 +17,5 @@
         "ajv-cli": "^4.0.1",
         "prettier": "^2.2.1"
     },
-    "dependencies": {
-        "ajv": "^7.0.2"
-    }
+    "dependencies": {}
 }
