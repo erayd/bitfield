@@ -1,6 +1,6 @@
 "use strict";
 
-import * as validate from "./schema.js";
+import * as validate from "./schema.cjs";
 
 /** Generic bitfield manipulation class */
 export class Bitfield {
